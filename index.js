@@ -3,6 +3,7 @@ const cors = require("cors");
 
 const login = require('./router/loginRouter')
 const pacientesRouter = require('./router/pacientesRouter');
+const citasRouter = require('./router/citasRouter')
 
 const app = express();
 app.use(express.json());
@@ -10,6 +11,7 @@ app.use(cors());
 
 app.use("/login", login);
 app.use("/pacientes", pacientesRouter);
+app.use("/citas", citasRouter)
 
 
 // app.get("/obtenerPacientes", (peticion, respuesta) => {
