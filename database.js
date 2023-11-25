@@ -7,10 +7,10 @@ app.use(express.json());
 app.use(cors());
 
 const connection = mysql.createConnection({
-  server: "localhost",
-  user: "root",
-  password: "",
-  database: "nutriapp",
+  host: "mysql-snowy-zero.alwaysdata.net",
+  user: "333373",
+  password: "46154774",
+  database: "snowy-zero_nutriapp",
 });
 
 connection.connect(function (error) {
