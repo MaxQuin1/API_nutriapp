@@ -20,7 +20,32 @@ const obtenerPacientesPorId = (peticion, respuesta) => {
     });
   };
 
+  function agregarPaciente(request, response) {
+    const nombre_usuario = request.body.nombre_usuario
+    const correo_electronico = request.body.correo_electronico
+    const contrasena = request.body.contrasena
+
+  connection.query(
+    `INSERT INTO pacientes (nombre_paciente, correo_electronico, contrasena) VALUES (?, ?, ?);`,
+    [
+      nombre_usuario,
+      correo_electronico,
+      contrasena,
+    ],
+    (error, result) => {
+      if (error) {
+        response.status(500).json({ error: "Error al agregar al paciente" });
+      } else {
+        response
+          .status(200)
+          .json({ mensaje: "El paciente agregado correctamente" });
+      }
+    }
+  );  
+}
+
   module.exports = {
     obtenerPacientes,
     obtenerPacientesPorId,
+    agregarPaciente,
 };

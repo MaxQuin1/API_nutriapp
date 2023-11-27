@@ -2,14 +2,18 @@ const express = require("express");
 const cors = require("cors");
 
 const login = require('./router/loginRouter')
+const usuariosRouter = require('./router/usuariosRouter');
 const pacientesRouter = require('./router/pacientesRouter');
+const nutriologosRouter = require('./router/nutriologosRouter');
 
 const app = express();
 app.use(express.json());
 app.use(cors());
 
 app.use("/login", login);
+app.use("/usuarios", usuariosRouter);
 app.use("/pacientes", pacientesRouter);
+app.use("/nutriologos", nutriologosRouter);
 
 
 // app.get("/obtenerPacientes", (peticion, respuesta) => {

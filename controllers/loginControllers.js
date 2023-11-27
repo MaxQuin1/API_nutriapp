@@ -16,8 +16,12 @@ function Login(request, response) {
           status: false,
         });
       } else {
+        const tipoUsuario = result[0].tipo_usuario;
         response.status(200).json({
-          respuesta: result,
+          respuesta: {
+            usuario: result[0],
+            tipo_usuario: tipoUsuario,
+          },
           length: result.length,
           status: true,
         });
