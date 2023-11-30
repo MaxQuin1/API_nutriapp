@@ -2,6 +2,16 @@
 const { json } = require("express");
 const connection = require("../database");
 
+const obtenerUsuarios = (peticion, respuesta) => {
+  const sql = "SELECT * FROM usuarios";
+  connection.query(sql, (error, resultado) => {
+      if (error) {
+          return respuesta.json({ error: "error en la consulta" });
+      }
+      return respuesta.json({ listausuarios: resultado });
+  });
+};
+
 function obtenerUsuarioPorId(request, response) {
   const id = request.params.id;
 
@@ -68,6 +78,7 @@ function agregarUsuario(request, response) {
 }
 
 module.exports = {
+  obtenerUsuarios,
   obtenerUsuarioPorId,
   actualizarUsuarioPorId,
   agregarUsuario,

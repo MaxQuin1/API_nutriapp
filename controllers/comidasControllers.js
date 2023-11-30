@@ -1,47 +1,77 @@
-const { json } = require("express")
-const connection = require("../database")
+const { json } = require("express");
+const connection = require("../database");
 
 const obtenerComidas = (peticion, respuesta) => {
-    const sql = "SELECT * FROM comidas";
-    connection.query(sql, (error, resultado) => {
-        if (error) {
-            return respuesta.json({ error: "error en la consulta" });
-        }
-        return respuesta.json({ listacomidas: resultado });
-    });
+  const sql = "SELECT * FROM comidas";
+  connection.query(sql, (error, resultado) => {
+    if (error) {
+      return respuesta.json({ error: "error en la consulta" });
+    }
+    return respuesta.json({ listacomidas: resultado });
+  });
 };
 
 const crearComida = (peticion, respuesta) => {
-    const { id_paciente, nombre_alimento, cantidad_dias  } = peticion.body
-    connection.query('INSERT INTO comidas (id_paciente, nombre_alimento, cantidad_dias) VALUES (?, ?, ?)', [id_paciente, nombre_alimento, cantidad_dias], (error, results) => {
-        if (error) {
-            console.error("Error al agregar comida", error)
-            respuesta.status(500).json({
-                error: "Error al agregar comida"
-            })
-        } else {
-            respuesta.json({ menssage: "comida agregada" })
-        }
-    })
+  const { id_paciente, nombre_alimento, cantidad_dias } = peticion.body;
+  connection.query(
+    "INSERT INTO comidas (id_paciente, nombre_alimento, cantidad_dias) VALUES (?, ?, ?)",
+    [id_paciente, nombre_alimento, cantidad_dias],
+    (error, results) => {
+      if (error) {
+        console.error("Error al agregar comida", error);
+        respuesta.status(500).json({
+          error: "Error al agregar comida",
+        });
+      } else {
+        respuesta.json({ menssage: "comida agregada" });
+      }
+    }
+  );
+};
+
+function actualizarComidaPorId(request, response) {
+  const id = request.params.id;
+  const nombre = request.body.nombre_alimento;
+  const cantidad_dias = request.body.cantidad_dias;
+
+  connection.query(
+    "UPDATE comidas SET nombre_alimento = ?, cantidad_dias = ? WHERE id_alimento = ?",
+    [nombre, cantidad_dias, id],
+    (error, result) => {
+      if (error) {
+        console.error("Error al actualizar el alimento:", error);
+        response.status(500).json({ error: "Error interno del servidor" });
+      } else {
+        response
+          .status(200)
+          .json({ mensaje: "Alimento actualizado correctamente" });
+      }
+    }
+  );
 }
 
-const elimninarComidasPorId = (peticion, respuesta) => {
-    const id = peticion.params.id_cita
+const eliminarComidasPorId = (peticion, respuesta) => {
+  const id = peticion.params.id;
 
-    connection.query('DELETE FROM comida WHERE id_alimento = ?', [id], (error, results) => {
-        if (error) {
-            console.error("Error al eliminar", error);
-            respuesta.status(500), json({ error: "Ocurrio un error eliminar" })
-        } else if (results.length === 0) {
-            respuesta.status(500).json({ error: "Error 1234" })
-        } else {
-            respuesta.json({ message: "la comida no fue eliminada" })
-        }
-    })
+  connection.query(
+    "DELETE FROM comidas WHERE id_alimento = ?",
+    [id],
+    (error, results) => {
+      if (error) {
+        console.error("Error al eliminar", error);
+        respuesta.status(500).json({ error: "Ocurrió un error al eliminar" });
+      } else if (results.affectedRows === 0) {
+        respuesta.status(500).json({ error: "Error 1234" });
+      } else {
+        respuesta.json({ message: "La comida fue eliminada correctamente" });
+      }
+    }
+  );
+};
 
-}
 module.exports = {
-    obtenerComidas,
-    crearComida,
-    elimninarComidasPorId
+  obtenerComidas,
+  crearComida,
+  actualizarComidaPorId,
+  eliminarComidasPorId,
 };
