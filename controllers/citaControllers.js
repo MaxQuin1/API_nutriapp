@@ -2,7 +2,7 @@ const { json } = require("express");
 const connection = require("../database");
 
 const obtenerCitas = (peticion, respuesta) => {
-  const sql = "SELECT * FROM citas WHERE status IS NULL";
+  const sql = "SELECT * FROM citas";
   connection.query(sql, (error, resultado) => {
     if (error) {
       return respuesta.json({ error: "error en la consulta" });
