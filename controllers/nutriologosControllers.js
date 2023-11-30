@@ -30,6 +30,7 @@ function agregarNutriologo(request, response) {
     [nombre_usuario, correo_electronico, contrasena],
     (error, result) => {
       if (error) {
+        console.log(error);
         response.status(500).json({ error: "Error al agregar al nutriologo" });
       } else {
         response
@@ -37,7 +38,7 @@ function agregarNutriologo(request, response) {
           .json({ mensaje: "Nutriologo agregado correctamente" });
       }
     }
-  );
+  );  
 }
 
 module.exports = {

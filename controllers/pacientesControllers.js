@@ -24,13 +24,15 @@ const obtenerPacientesPorId = (peticion, respuesta) => {
     const nombre_usuario = request.body.nombre_usuario
     const correo_electronico = request.body.correo_electronico
     const contrasena = request.body.contrasena
+    const token = request.body.token
 
   connection.query(
-    `INSERT INTO pacientes (nombre_paciente, correo_electronico, contrasena) VALUES (?, ?, ?);`,
+    `INSERT INTO pacientes (nombre_paciente, correo_electronico, contrasena, token) VALUES (?, ?, ?, ?);`,
     [
       nombre_usuario,
       correo_electronico,
       contrasena,
+      token
     ],
     (error, result) => {
       if (error) {
