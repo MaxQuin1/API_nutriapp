@@ -7,6 +7,7 @@ const pacientesRouter = require('./router/pacientesRouter');
 const citasRouter = require('./router/citasRouter')
 const nutriologosRouter = require('./router/nutriologosRouter');
 const tokenRouter = require('./router/tokenRouter');
+const comidasRouter = require('./router/comidasRouter');
 
 const app = express();
 app.use(express.json());
@@ -18,6 +19,7 @@ app.use("/pacientes", pacientesRouter);
 app.use("/citas", citasRouter)
 app.use("/nutriologos", nutriologosRouter);
 app.use("/token", tokenRouter);
+app.use("/comidas", comidasRouter);
 
 
 // app.get("/obtenerPacientes", (peticion, respuesta) => {
