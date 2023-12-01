@@ -23,7 +23,16 @@ const crearComida = (peticion, respuesta) => {
           error: "Error al agregar comida",
         });
       } else {
-        respuesta.json({ menssage: "comida agregada" });
+        const nuevoAlimento = {
+          id_alimento: results.insertId,
+          id_paciente: id_paciente,
+          nombre_alimento: nombre_alimento,
+          cantidad_dias: cantidad_dias,
+        };
+        respuesta.json({
+          message: "comida agregada",
+          nuevoAlimento: nuevoAlimento,
+        });
       }
     }
   );
