@@ -41,7 +41,20 @@ const crearCitas = (peticion, respuesta) => {
           error: "Error al agregar cita",
         });
       } else {
-        respuesta.json({ menssage: "cita agregada" });
+        connection.query(
+          "SELECT * FROM citas WHERE id_cita = ?",
+          [results.insertId],
+          (error, results) => {
+            if (error) {
+              console.error("Error al obtener la cita", error);
+              respuesta.status(500).json({
+                error: "Error al obtener la cita",
+              });
+            } else {
+              respuesta.json({ cita: results[0], mensaje: "Cita agregada" });
+            }
+          }
+        );
       }
     }
   );
